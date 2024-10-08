@@ -6,6 +6,7 @@ var GAMER = 'GAMER';
 var GAMER_IMG = '<img src="img/gamer.png" />';
 var BALL_IMG = '<img src="img/ball.png" />';
 var POINTS = 0;
+var COUNT_BALLS = 2;
 
 var gBoard;
 var gGamerPos;
@@ -118,8 +119,11 @@ function moveTo(i, j) {
 
 		if (targetCell.gameElement === BALL) {
 			POINTS++;
+			COUNT_BALLS--;
 			document.getElementById('points').innerText = `Balls you caught: ${POINTS}`;
 			console.log('Collecting!');
+			if (COUNT_BALLS === 0)
+				alert('You won! There is no more balls!');
 		}
 
 		// MOVING from current position
@@ -172,6 +176,7 @@ function handleKey(event) {
 
 }
 
+
 // Returns the class name for a specific cell
 function getClassName(location) {
 	var cellClass = 'cell-' + location.i + '-' + location.j;
@@ -179,3 +184,17 @@ function getClassName(location) {
 	return cellClass;
 }
 
+
+function setBalls() {
+	let i, j;
+	do {
+		i = Math.floor(Math.random() * 10);
+		j = Math.floor(Math.random() * 12);
+	} while (gBoard[i][j].type != FLOOR || gBoard[i][j].gameElement != null)
+	gBoard[i][j].gameElement = BALL;
+	let location = { i: i, j:j};
+	renderCell(location,BALL_IMG);
+	COUNT_BALLS++;
+}
+
+setInterval(setBalls, 5000);
