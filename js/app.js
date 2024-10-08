@@ -198,3 +198,7 @@ function setBalls() {
 }
 
 setInterval(setBalls, 5000);
+
+function reset() {
+	POINTS = 0;
+}
