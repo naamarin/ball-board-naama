@@ -119,10 +119,9 @@ function moveTo(i, j) {
 
 		if (targetCell.gameElement === BALL) {
 			POINTS++;
-			COUNT_BALLS--;
 			document.getElementById('points').innerText = `Balls you caught: ${POINTS}`;
 			console.log('Collecting!');
-			if (COUNT_BALLS === 0)
+			if (--COUNT_BALLS === 0)
 				alert('You won! There is no more balls!');
 		}
 
@@ -201,4 +200,5 @@ setInterval(setBalls, 5000);
 
 function reset() {
 	POINTS = 0;
+	document.getElementById('points').innerText = `Balls you caught: ${POINTS}`;
 }
