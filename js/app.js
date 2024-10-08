@@ -2,8 +2,7 @@ var WALL = 'WALL';
 var FLOOR = 'FLOOR';
 var BALL = 'BALL';
 var GAMER = 'GAMER';
-FOUR_EXITS = [[[9, 5], [1, 5]], [[0, 5], [8, 5]], [[4, 0], [4, 10]], [[4, 11], [4, 1]]];
-var aaa
+
 var GAMER_IMG = '<img src="img/gamer.png" />';
 var BALL_IMG = '<img src="img/ball.png" />';
 var POINTS = 0;
@@ -96,32 +95,26 @@ function renderBoard(board) {
 
 // Move the player to a specific location
 function moveTo(i, j) {
-	if (i < 0 || j < 0 || i> 11 || i > 9) {
+	//move from side to side and from top to botton
+	if (i === -1)
+		i = 9;
+	else if (j === -1)
+		j = 11;
+	else if (i === 10)
+		i = 0;
+	else if (j === 12)
+		j = 0;
 
-	}
 	var targetCell = gBoard[i][j];
-	if (targetCell.type === WALL) {
-		// console.log(i,j);
-		// let isWall = false;
-		// for (let i = 0; i < 4; i++) {
-		// 	let [i2,j2] = FOUR_EXITS[i][0];
-		// 	console.log(i2,j2);
-		// 	if (i === i2 && j === j2) {
-		// 		i,j = FOUR_EXITS[i][0];
-		// 		isWall = true;
-		// 	}
-		// }
-		// console.log(isWall);
-		// if (!isWall)
+	if (targetCell.type === WALL)
 		return;
-	}
-	//console.log(i,j);
+
 	// Calculate distance to make sure we are moving to a neighbor cell
 	var iAbsDiff = Math.abs(i - gGamerPos.i);
 	var jAbsDiff = Math.abs(j - gGamerPos.j);
 
-	// If the clicked Cell is one of the four allowed
-	if ((iAbsDiff === 1 && jAbsDiff === 0) || (jAbsDiff === 1 && iAbsDiff === 0)) {
+	// If the clicked Cell is one of the four allowed + bonus from side to side and top to buttom
+	if ((iAbsDiff === 1 && jAbsDiff === 0) || (jAbsDiff === 1 && iAbsDiff === 0) || (iAbsDiff === 9 && jAbsDiff === 0) || (jAbsDiff === 11 && iAbsDiff === 0)) {
 
 		if (targetCell.gameElement === BALL) {
 			POINTS++;
